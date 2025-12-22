@@ -1,0 +1,11 @@
+// Local BIND9 configuration file
+
+zone "mycompany.local" {
+    type master;
+    file "/etc/bind/zones/mycompany.local.db";  // Forward zone file
+};
+
+zone "56.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/zones/db.192.168.56";      // Reverse zone file
+};

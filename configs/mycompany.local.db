@@ -1,0 +1,11 @@
+$TTL    604800
+@       IN      SOA     ns1.mycompany.local. admin.mycompany.local. (
+                              2025122001 ; Serial
+                              604800     ; Refresh
+                              86400      ; Retry
+                              2419200    ; Expire
+                              604800 )   ; Negative Cache TTL
+;
+@       IN      NS      ns1.mycompany.local.
+ns1     IN      A       192.168.56.10
+server1 IN      A       192.168.56.20
