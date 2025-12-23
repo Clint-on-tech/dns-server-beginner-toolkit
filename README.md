@@ -122,6 +122,7 @@ o	The IP address resolves back to the hostname.
 **NOTE:**
 
 •	@127.0.0.1 – querying dns
+
 •	Restart named always before testing dns
 
 ---
