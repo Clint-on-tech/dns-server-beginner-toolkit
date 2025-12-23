@@ -106,6 +106,7 @@ This project focuses on deploying a local authoritative DNS server for a small e
     nslookup server1.mycompany.local 127.0.0.1
     
 **Expected output:**
+
 o	The hostname resolves to the configured IP address.
 
 (ii) reverse lookup testing
@@ -115,6 +116,7 @@ o	The hostname resolves to the configured IP address.
     nslookup 192.168.56.20 127.0.0.1
     
 **Expected Result:**
+
 o	The IP address resolves back to the hostname.
 
 **NOTE:**
@@ -199,10 +201,13 @@ FORMERR resolving './NS/IN'`
 I need help understanding how to install and configure a DNS server using BIND9 on Kali Linux.
 
 (i)	Common Issues & Fixes
+
 Service not starting:
+
 o	Fixed by validating configuration files using `named-checkconf`.
 
 (ii)	Zone file errors
+
 o	Fixed using `named-checkzone`.
 
     sudo named-checkzone mycompany.local /etc/bind/zones/mycompany.local.db
@@ -212,6 +217,7 @@ o	Fixed using `named-checkzone`.
 (iii)	Dependency Issues
 
 **Fix:**
+
 o	Resolved by using a clean Kali Linux installation to avoid broken package dependencies.
 
  https://www.kali.org/get-kali/#kali-installer-images
