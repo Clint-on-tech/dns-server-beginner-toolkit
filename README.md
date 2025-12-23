@@ -1,6 +1,6 @@
 # Title: Prompt-Powered Kickstart: Building a Beginner’s Toolkit for DNS Server Installation and Configuration (BIND9)
 
-## 1. Objective
+## 1. Objectives
 
 - Understand DNS fundamentals and zone concepts  
 - Install and manage BIND9 on Kali Linux  
@@ -103,6 +103,7 @@ This project focuses on deploying a local authoritative DNS server for a small e
 (i) forward lookup testing
 
     dig @127.0.0.1 server1.mycompany.local
+    
     nslookup server1.mycompany.local 127.0.0.1
     
 **Expected output:**
