@@ -1,13 +1,17 @@
 Title: Prompt-Powered Kickstart: Building a Beginner’s Toolkit for DNS Server Installation and Configuration (BIND9)
 1.	Objective
-Build a beginner-friendly, reproducible toolkit that demonstrates how to install, configure, and validate a DNS server using BIND9 on Kali Linux VM
-	Technology Chosen: DNS Server (BIND9)  
-	Why This Technology
+- Understand DNS fundamentals and zone concepts
+- Install and manage BIND9 on Kali Linux
+- Configure forward and reverse lookup zones
+- Validate DNS configurations using BIND utilities
+- Test name resolution using dig and nslookup
+- Document errors, fixes, and learning outcomes
+Technology Chosen: DNS Server (BIND9)  
+Why This Technology
 o	DNS is a core component of all networks. Understanding how DNS works, how to install it, and how to integrate it into a small enterprise LAN is a foundational skill for network and systems administrators.
-	End Goal: 
+End Goal: 
 o	To install, configure, and test a working DNS server using BIND9 on Kali Linux, and demonstrate how it integrates into a small enterprise network.
 2.	Quick Summary of the Technology
-
 o	The Domain Name System (DNS) is a hierarchical naming system used to translate human-readable domain names into IP addresses.
 Where it is used:
 •	Enterprise networks
@@ -43,14 +47,65 @@ Assumptions:
 •	Security hardening (DNSSEC, views, ACLs) is outside the scope of this beginner toolkit
 
 5.	Installation & Setup Instructions
+How to Run / Reproduce This Project
+1. Set up a Kali Linux virtual machine using VirtualBox
+2. Update the system:
+   sudo apt update
+3. Install BIND9:
+   sudo apt install bind9 bind9-utils bind9-dnsutils -y
+4. Copy configuration files from the configs/ folder to /etc/bind/
+5. Validate configurations:
+   sudo named-checkconf
+   sudo systemctl start named
+   sudo systemctl enable named
+      (i) forward lookup
+   sudo named-checkzone mycompany.local /etc/bind/zones/mycompany.local.db
+      (ii) reverse lookup
+   sudo named-checkzone 56.168.192.in-addr.arpa /etc/bind/zones/db.192.168.56
+7. Restart the DNS service:
+   sudo systemctl restart named
+8. Test DNS resolution:
+       (i) forward lookup testing
+   dig @127.0.0.1 server1.mycompany.local
+   nslookup server1.mycompany.local 127.0.0.1
+       (ii) reverse lookup testing
+   dig @127.0.0.1 -x 192.168.56.20
+   nslookup 192.168.56.20 127.0.0.1
 
-Step 1: Update the system
-•	sudo apt update
-Step 2: Install BIND9 and utilities
-•	sudo apt install bind9 bind9-utils bind9-dnsutils
-Step 3: Start the DNS service
-•	sudo systemctl start named
-•	systemctl status named
+ Installation & Setup Instructions SCREENSHOTS
+Step 1: Install BIND9
+[BIND9 Installation](screenshots/bind9_install.png)
+Step 2: Forward Lookup Zone Configuration
+o	Edit named.conf.options:
+[named.conf.options](screenshots/named_conf_options.png)
+o	Define Local Zone in named.conf.local:
+[named.conf.local](screenshots/named_conf_local.png)
+o	Create Forward Zone File:
+[Forward Zone File](screenshots/zone_file_forward.png)
+o	Validate Forward Zone:
+[Validate Forward Zone](screenshots/validate_forward.png)
+o	Forward Lookup Zone Testing:
+[Forward Lookup Test](screenshots/forward_test.png)
+Step 3: Reverse Lookup Zone Configuration
+o	Create Reverse Zone File:
+[Reverse Zone File](screenshots/zone_file_reverse.png)
+o	Validate Reverse Zone:
+[Validate Reverse Zone](screenshots/validate_reverse.png)
+o	Reverse Lookup Zone Testing:
+[Reverse Lookup Test](screenshots/reverse_test.png)
+
+DNS Configuration Files
+All configuration files used in this project are stored in the configs/ directory:
+
+- named.conf.options – global DNS options and forwarders
+- named.conf.local – local zone definitions
+- mycompany.local.db – forward lookup zone file
+- db.192.168.56 – reverse lookup zone file
+
+NOTE:
+In real enterprise environments, DNS administrators are often provided with existing configuration files or templates created by senior engineers.
+These files may be incomplete or require modification to support new zones or hosts.
+Understanding DNS concepts is essential for safely updating and troubleshooting such configurations.
 
 IGNORE:
 resolver priming query complete: failure
@@ -94,8 +149,6 @@ sudo named-checkzone 56.168.192.in-addr.arpa /etc/bind/zones/db.192.168.56
 iii.	Dependency Issues
 Fix:
 o	Resolved by using a clean Kali Linux installation to avoid broken package dependencies.
-
-Reference:
 https://www.kali.org/get-kali/#kali-installer-images
 
 Small Enterprise LAN Integration
@@ -116,28 +169,7 @@ This setup improves:
 https://www.isc.org/bind/
 https://www.kali.org/docs/
 https://www.zytrax.com/books/dns/
-Installation & Setup Instructions SCREENSHOTS
-Step 1: Install BIND9
-[BIND9 Installation](screenshots/bind9_install.png)
-Step 2: Forward Lookup Zone Configuration
-o	Edit named.conf.options:
-[named.conf.options](screenshots/named_conf_options.png)
-o	Define Local Zone in named.conf.local:
-[named.conf.local](screenshots/named_conf_local.png)
-o	Create Forward Zone File:
-[Forward Zone File](screenshots/zone_file_forward.png)
-o	Validate Forward Zone:
-[Validate Forward Zone](screenshots/validate_forward.png)
-o	Forward Lookup Zone Testing:
-[Forward Lookup Test](screenshots/forward_test.png)
-Step 3: Reverse Lookup Zone Configuration
-o	Create Reverse Zone File:
-[Reverse Zone File](screenshots/zone_file_reverse.png)
 
-o	Validate Reverse Zone:
-[Validate Reverse Zone](screenshots/validate_reverse.png)
-o	Reverse Lookup Zone Testing:
-[Reverse Lookup Test](screenshots/reverse_test.png)
 	Network Diagram
 o	The following diagram illustrates how the DNS server integrates into a small enterprise LAN:
 [LAN Diagram](screenshots/lan_diagram.png)
